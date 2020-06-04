@@ -792,7 +792,8 @@ bool drm_connector_set_mode(struct wlr_drm_connector *conn,
 
 	if (conn->crtc == NULL) {
 		// Maybe we can steal a CRTC from a disabled output
-		// realloc_crtcs(drm);
+        wlr_log(WLR_DEBUG, "Trying to steal a CRTC from disabled output.");
+	    realloc_crtcs(drm);
 	}
 	if (conn->crtc == NULL) {
 		wlr_log(WLR_ERROR, "Cannot modeset '%s': no CRTC for this connector",
