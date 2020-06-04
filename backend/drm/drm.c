@@ -770,13 +770,18 @@ bool drm_connector_set_mode(struct wlr_drm_connector *conn,
 	conn->desired_enabled = wlr_mode != NULL;
 	conn->desired_mode = wlr_mode;
 
+    wlr_log(WLR_DEBUG, "drm_connector_set_mode");
+
 	if (wlr_mode == NULL) {
+        wlr_log(WLR_DEBUG, "wlr_mode is NULL");
 		if (conn->crtc != NULL) {
+            wlr_log(WLR_DEBUG, "conn->crtc is not NULL");
 			conn->crtc->pending_modeset = true;
 			conn->crtc->pending.active = false;
 			if (!drm_crtc_commit(conn, 0)) {
 				return false;
 			}
+            wlr_log(WLR_DEBUG, "trying realloc");
 			realloc_crtcs(drm);
 			attempt_enable_needs_modeset(drm);
 		}
